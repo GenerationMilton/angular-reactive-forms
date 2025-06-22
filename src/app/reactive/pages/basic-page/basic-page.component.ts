@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-page',
@@ -13,9 +13,9 @@ export class BasicPageComponent {
   private formBuilder =inject(FormBuilder);
 
   myForm = this.formBuilder.group({
-    name:['', []  /**Validadores síncronos y validadores asíncronos */],
-    price:[0],
-    inStorate:[0],
+    name:['', [Validators.required, Validators.minLength(3)] ], /**Validadores síncronos y validadores asíncronos */
+    price:[0, [Validators.required, Validators.min(10)]],
+    inStorage:[0, [Validators.required, Validators.min(0)]],
   })
 
 
