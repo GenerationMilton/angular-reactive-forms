@@ -12,7 +12,7 @@ export class BasicPageComponent {
 
   private formBuilder =inject(FormBuilder);
 
-  myForm = this.formBuilder.group({
+  myForm: FormGroup = this.formBuilder.group({
     name:['', [Validators.required, Validators.minLength(3)] ], /**Validadores síncronos y validadores asíncronos */
     price:[0, [Validators.required, Validators.min(10)]],
     inStorage:[0, [Validators.required, Validators.min(0)]],
@@ -25,5 +25,33 @@ export class BasicPageComponent {
   //   price: new FormControl(0),
   //   inStorage: new FormControl(0),
   // });
+
+  //funcion validadora
+  isValidField( fieldName: string ): boolean | null {
+    return !!this.myForm.controls[fieldName].errors;
+  }
+
+  getFieldError( fieldName: string ):string | null {
+
+    if( !this.myForm.controls[fieldName]) return null;
+
+    const errors = this.myForm.controls[fieldName].errors ?? {};
+
+    for(const key of Object.keys(errors)){
+      switch(key){
+        case 'required':
+          return 'Este campo es requerido';
+
+        case 'minlength':
+          return `Mínimo de ${ errors['minlength'].requiredLength} caracteres.`
+
+        case 'min':
+          return `Valor minimo de ${ errors['min'].min} caracteres.`
+       
+      }
+    }
+    return null;
+
+  }
 
 }
