@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormUtils } from '../../../utils/form-utils';
 
 @Component({
   selector: 'app-basic-page',
@@ -11,6 +12,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 export class BasicPageComponent { 
 
   private formBuilder =inject(FormBuilder);
+  formUtils = FormUtils;
+  
 
   myForm: FormGroup = this.formBuilder.group({
     name:['', [Validators.required, Validators.minLength(3)] ], /**Validadores síncronos y validadores asíncronos */
@@ -27,32 +30,32 @@ export class BasicPageComponent {
   // });
 
   //funcion validadora
-  isValidField( fieldName: string ): boolean | null {
-    return (this.myForm.controls[fieldName].errors && this.myForm.controls[fieldName].touched);
-  }
+  // isValidField( fieldName: string ): boolean | null {
+  //   return (this.myForm.controls[fieldName].errors && this.myForm.controls[fieldName].touched);
+  // }
 
-  getFieldError( fieldName: string ):string | null {
+  // getFieldError( fieldName: string ):string | null {
 
-    if( !this.myForm.controls[fieldName]) return null;
+  //   if( !this.myForm.controls[fieldName]) return null;
 
-    const errors = this.myForm.controls[fieldName].errors ?? {};
+  //   const errors = this.myForm.controls[fieldName].errors ?? {};
 
-    for(const key of Object.keys(errors)){
-      switch(key){
-        case 'required':
-          return 'Este campo es requerido';
+  //   for(const key of Object.keys(errors)){
+  //     switch(key){
+  //       case 'required':
+  //         return 'Este campo es requerido';
 
-        case 'minlength':
-          return `Mínimo de ${ errors['minlength'].requiredLength} caracteres.`
+  //       case 'minlength':
+  //         return `Mínimo de ${ errors['minlength'].requiredLength} caracteres.`
 
-        case 'min':
-          return `Valor minimo de ${ errors['min'].min} caracteres.`
+  //       case 'min':
+  //         return `Valor minimo de ${ errors['min'].min} caracteres.`
        
-      }
-    }
-    return null;
+  //     }
+  //   }
+  //   return null;
 
-  }
+  // }
 
   onSave(){
     if(this.myForm.invalid){
