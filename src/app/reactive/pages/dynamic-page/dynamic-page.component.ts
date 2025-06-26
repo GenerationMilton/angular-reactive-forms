@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -16,6 +17,8 @@ import { FormUtils } from '../../../utils/form-utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicPageComponent {
+
+
   private fb = inject(FormBuilder);
 
   formUtils = FormUtils;
@@ -27,12 +30,33 @@ export class DynamicPageComponent {
         ['Metal Gear', Validators.required],
         ['Mario Kart', Validators.required],
       ],
-      Validators.minLength(3)
+      Validators.minLength(2)
     ),
   });
 
   get favoriteGames(){
     return this.myForm.get('favoriteGames') as FormArray
   }
+
+  //new control
+  newFavorite = new FormControl('', Validators.required);
+
+  onAddToFavorites() {
   
+    if(this.newFavorite.invalid) return;
+    const newGame = this.newFavorite.value;
+
+    this.favoriteGames.push(this.fb.control(newGame, Validators.required));
+
+    this.newFavorite.reset();
+  }
+
+  onDeleteFavorite(index: number) {
+    this.favoriteGames.removeAt(index);
+    
+  }
+
+  onSubmit(){
+    this.myForm.markAllAsTouched();
+  }
 }
