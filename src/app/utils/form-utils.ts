@@ -36,6 +36,9 @@ export class FormUtils {
         case 'emailTaken':
           return `El correo electrónico ya esta siendo usado por otro usuario`;
 
+        case 'noStrider':
+          return `No se puede usar el username de strider en la app`;
+
         case 'pattern':
           if(errors['pattern'].requiredPattern === FormUtils.emailPattern){
             return 'El valor ingresado no luce como un correo electrónico';
@@ -91,6 +94,7 @@ export class FormUtils {
     };
   }
 
+  //async validator
   static async checkingServerResponse(control: AbstractControl): Promise<ValidationErrors | null> {
 
     console.log('Validando contra servidor');
@@ -108,5 +112,18 @@ export class FormUtils {
     return null;
   }
 
+  //sync validator
+  static notStrider(control: AbstractControl): ValidationErrors|null{
+
+    const value= control.value;
+
+    if(value == 'strider'){
+      return{
+        noStrider: true
+      };
+    }
+
+    return null;
+  }
 
 }
