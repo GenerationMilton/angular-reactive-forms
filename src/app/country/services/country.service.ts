@@ -7,20 +7,14 @@ import { Country } from '../interfaces/country.interface';
 export class CountryService {
 
     private baseUrl = 'https://restcountries.com/v3.1';
-    http = inject(HttpClient);
+    private http = inject(HttpClient)
 
     //objeto continentes
-    private _regions = [
-        'Africa',
-        'Americas',
-        'Asia',
-        'Europe',
-        'Oceania'
-    ];
+    private _regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 
-    get regions(): string[]{
-        return[...this._regions];
-    }
+      get regions(): string[] {
+        return [...this._regions];
+        }
 
     getCountriesByRegion(region:string):Observable<Country[]>{
 
@@ -28,7 +22,7 @@ export class CountryService {
         if(!region)return of([]);
 
         //url with fields
-        const url = `${this.baseUrl}/region/${region}?fields=cca,name,borders`;
+        const url = `${this.baseUrl}/region/${region}?fields=cca3,name,borders`;
         return this.http.get<Country[]>(url);
 
     }
@@ -41,16 +35,16 @@ export class CountryService {
     
     //get Country by codes
     getCountryNamesByCodeArray(countryCodes: string[]): Observable<Country[]>{
-        if(!countryCodes || countryCodes.length === 0) return of([]);
+        if (!countryCodes || countryCodes.length === 0) return of([]);
 
-        const countriesRequest: Observable<Country>[] =[];
+        const countriesRequests: Observable<Country>[] = [];
 
-        countryCodes.forEach( code =>{
+        countryCodes.forEach((code) => {
             const request = this.getCountryByAlphaCode(code);
-            countriesRequest.push(request);
-        })
+            countriesRequests.push(request);
+        });
 
-        return combineLatest( countriesRequest);
-    }
+        return combineLatest(countriesRequests);
+        }
 
 }

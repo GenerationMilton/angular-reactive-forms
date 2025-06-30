@@ -28,7 +28,7 @@ export class CountryPageComponent {
     region: ['', Validators.required],
     country: ['', Validators.required],
     border: ['', Validators.required],
-  })
+  });
 
   //Subscribe with signals
   onFormChanged = effect(( onCleanup )=>{
@@ -76,7 +76,8 @@ export class CountryPageComponent {
     )
 
     .subscribe((borders)=>{
-      console.log({borders});
+      this.borders.set(borders);
+      //console.log({borders});
     });
 
 
