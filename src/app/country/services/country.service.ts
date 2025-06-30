@@ -6,7 +6,7 @@ import { Country } from '../interfaces/country.interface';
 @Injectable({providedIn: 'root'})
 export class CountryService {
 
-    private baseUrl = 'https://restcountries.com/v3.1/';
+    private baseUrl = 'https://restcountries.com/v3.1';
     http = inject(HttpClient);
 
     //objeto continentes

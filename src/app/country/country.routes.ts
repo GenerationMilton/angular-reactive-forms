@@ -8,4 +8,8 @@ export const countryRoutes: Routes =[
         path:'',
         component: CountryPageComponent,
     },
+    {
+        path:'**',
+        redirectTo:'country',
+    },
 ];

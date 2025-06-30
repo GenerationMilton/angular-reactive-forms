@@ -24,14 +24,14 @@ export class SideMenuComponent {
   authMenu: MenuItem[] = [
     {
       title: 'Registro',
-      route: '/.auth',
+      route: '/auth',
     },
   ];
 
   countryMenu: MenuItem[] = [
     {
       title: 'Países',
-      route: '/.country',
+      route: '/country',
     },
   ];
 }
